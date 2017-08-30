@@ -6,13 +6,12 @@ import { Provider } from "react-redux";
 import logger from "redux-logger";
 import App from "./components/App.jsx";
 
-const initState = { counter: 0 };
+const initState = { articles: [] };
 const counter = (state = { ...initState }, action) => {
+  debugger;
   switch (action.type) {
-    case "INCREMENT":
-      return { ...state, counter: state.counter + 1 };
-    case "DECREMENT":
-      return { ...state, counter: state.counter - 1 };
+    case "ARTICLES_LIST_ADD":
+      return { ...state, articles: action.response };
     default:
       return { ...state };
   }

@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import axios from "axios";
+import falcorModel from "../falcorModel.js";
+import { bindActionCreators } from "redux";
+import articleActions from "../actions/article.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -9,32 +12,39 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:3000/").then(res => console.log(res));
+    // axios.get("http://localhost:3000/").then(res => console.log(res));
+    this._fetch();
+  }
+
+  async _fetch() {
+    const articlesLength = await falcorModel
+      .getValue("articles.length")
+      .then(length => length);
+    const articles = await falcorModel
+      .get([
+        "articles",
+        { from: 0, to: articlesLength - 1 },
+        ["id", "articleTitle", "articleContent"]
+      ])
+      .then(articlesResponse => articlesResponse.json.articles);
+    this.props.articleActions.articlesList(articles);
   }
 
   render() {
     return (
       <div>
-        <button onClick={() => this.props.dispatch({ type: "INCREMENT" })}>
-          INC
-        </button>
-        <button onClick={() => this.props.dispatch({ type: "DECREMENT" })}>
-          DEC
-        </button>
-        <span>
-          Counter: {this.props.state.counter}
-        </span>
+        {/* {this.props.articles.map(item => (
+          <span key={item.id}>{item.articleTitle}</span>
+        ))} */}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return { state };
+const mapStateToProps = state => ({ ...state });
+
+const mapDispatchToProps = dispatch => {
+  return { articleActions: bindActionCreators(articleActions, dispatch) };
 };
 
-// const mapDispatchToProps = dispatch => {
-//   return { dispatch };
-// };
-
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
