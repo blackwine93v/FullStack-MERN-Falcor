@@ -8,7 +8,7 @@
     "build": "npm run clean && webpack",
     "clean": "rimraf dist/*",
     "dev-watch": "webpack -w",
-    "start-server": "nodemon src/server.js"
+    "server": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -41,6 +41,8 @@
     "axios": "^0.16.2",
     "cors": "^2.8.4",
     "express": "^4.15.4",
+    "falcor": "^2.0.0-rc1",
+    "falcor-http-datasource": "^0.1.3",
     "moment": "^2.18.1",
     "mongoose": "^4.11.8",
     "react": "^15.6.1",
