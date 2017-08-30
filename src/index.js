@@ -1,7 +1,7 @@
 import "./app.scss";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import logger from "redux-logger";
 import App from "./components/App.jsx";
@@ -18,7 +18,8 @@ const counter = (state = { ...initState }, action) => {
   }
 };
 
-const store = createStore(counter, applyMiddleware(logger));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(counter, composeEnhancers(applyMiddleware(logger)));
 
 // store.subscribe(() => console.log(store.getState()));
 
