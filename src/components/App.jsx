@@ -20,28 +20,36 @@ class App extends React.Component {
     const articlesLength = await falcorModel
       .getValue("articles.length")
       .then(length => length);
-    const articles = await falcorModel
-      .get([
-        "articles",
-        { from: 0, to: articlesLength - 1 },
-        ["id", "articleTitle", "articleContent"]
-      ])
-      .then(articlesResponse => articlesResponse.json.articles);
-    this.props.articleActions.articlesList(articles);
+    const from = 0,
+      to = articlesLength - 1;
+    if (to >= 0) {
+      const articles = await falcorModel
+        .get([
+          "articles",
+          { from, to },
+          ["articleId", "articleTitle", "articleContent"]
+        ])
+        .then(articlesResponse => articlesResponse.json.articles);
+      this.props.articleActions.articlesList(articles);
+    }
+  }
+
+  renderArticles(articles) {
+    return Object.keys(articles).map(key => {
+      let item = articles[key];
+      if (item.articleId)
+        return <h1 key={item.articleId}>{item.articleTitle}</h1>;
+    });
   }
 
   render() {
-    return (
-      <div>
-        {/* {this.props.articles.map(item => (
-          <span key={item.id}>{item.articleTitle}</span>
-        ))} */}
-      </div>
-    );
+    return <div>{this.renderArticles(this.props.articles)}</div>;
   }
 }
 
-const mapStateToProps = state => ({ ...state });
+const mapStateToProps = state => {
+  return { ...state };
+};
 
 const mapDispatchToProps = dispatch => {
   return { articleActions: bindActionCreators(articleActions, dispatch) };

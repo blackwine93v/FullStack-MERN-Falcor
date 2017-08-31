@@ -8,10 +8,11 @@ import App from "./components/App.jsx";
 
 const initState = { articles: [] };
 const counter = (state = { ...initState }, action) => {
-  debugger;
   switch (action.type) {
+    case "RETURN_ALL_ARTICLES":
+      return { ...state };
     case "ARTICLES_LIST_ADD":
-      return { ...state, articles: action.response };
+      return { ...state, articles: action.payload };
     default:
       return { ...state };
   }

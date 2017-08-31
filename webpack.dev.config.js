@@ -18,6 +18,9 @@ module.exports = {
     contentBase: path.join(__dirname, "dist"),
     compress: false,
     port: 9000
+    // headers: {
+    //   "Access-Control-Allow-Origin": "*"
+    // }
     // stats: "errors-only",
     // open: true
   },
