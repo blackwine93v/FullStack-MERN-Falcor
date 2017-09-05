@@ -1,28 +1,10 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema,
-  ObjectId = Schema.ObjectId;
-
-mongoose
-  .connect("mongodb://localhost/blog")
-  .then(
-    res => console.log("Mongo is connected!"),
-    err => console.log("Mongo is error!")
-  );
-
-const articleSchema = new Schema({
-  articleId: String,
-  articleTitle: String,
-  articleContent: String
-});
-
-const Article = mongoose.model("article", articleSchema, "articles");
-// Article({
-//   articleId: "4",
-//   articleTitle: "Test 4",
-//   articleContent: "Test 4 content"
-// }).save((e, rs) => console.log(e, rs));
+const configMongoose = require("./configMongoose");
+const sessionRoutes = require("./routesSession");
+const Article = configMongoose.Article;
 
 const PublishingAppRoutes = [
+  ...sessionRoutes,
+  ,
   {
     route: "articles.length",
     get: () => {
