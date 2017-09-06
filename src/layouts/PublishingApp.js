@@ -4,6 +4,7 @@ import axios from "axios";
 import falcorModel from "../falcorModel.js";
 import { bindActionCreators } from "redux";
 import articleActions from "../actions/article.js";
+import PropTypes from "prop-types";
 
 class App extends React.Component {
   constructor(props) {
