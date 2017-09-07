@@ -1,5 +1,3 @@
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 import React from "react";
 import ReactDOM from "react-dom";
 import createBrowserHistory from "history/lib/createBrowserHistory";
