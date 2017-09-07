@@ -21,13 +21,14 @@ module.exports = [
 
       return User.find(userStatementQuery, function(err, user) {
         if (err) throw err;
+        return user;
       }).then(result => {
         if (result.length) {
-          return null;
           // SUCCESSFUL LOGIN
           const role = result[0].role;
           const userDetailsToHash = username + role;
           const token = jwt.sign(userDetailsToHash, jwtSecret.secret);
+
           return [
             {
               path: ["login", "token"],

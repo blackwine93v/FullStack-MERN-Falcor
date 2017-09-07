@@ -44,7 +44,7 @@ class App extends React.Component {
   }
 
   render() {
-    return <div>{this.renderArticles(this.props.articles)}</div>;
+    return <div>1</div>;
   }
 }
 
