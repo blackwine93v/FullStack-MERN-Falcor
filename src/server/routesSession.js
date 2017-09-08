@@ -21,7 +21,6 @@ module.exports = [
 
       return User.find(userStatementQuery, function(err, user) {
         if (err) throw err;
-        return user;
       }).then(result => {
         if (result.length) {
           // SUCCESSFUL LOGIN
@@ -63,6 +62,55 @@ module.exports = [
 
         return result;
       });
+    }
+  },
+  {
+    route: ["register"],
+    call: (callPath, args) => {
+      const newUserObj = args[0];
+      newUserObj.password = newUserObj.password + "pubApp";
+      newUserObj.password = crypto
+        .createHash("sha256")
+        .update(newUserObj.password)
+        .digest("hex");
+      const newUser = new User(newUserObj);
+      return newUser
+        .save((err, data) => {
+          if (err) return err;
+        })
+        .then(newRes => {
+          /*
+    got new obj data, now let's get count:
+    */
+          const newUserDetail = newRes.toObject();
+          if (newUserDetail._id) {
+            const newUserId = newUserDetail._id.toString();
+            return [
+              {
+                path: ["register", "newUserId"],
+                value: newUserId
+              },
+              {
+                path: ["register", "error"],
+                value: false
+              }
+            ];
+          } else {
+            // registration failed
+            return [
+              {
+                path: ["register", "newUserId"],
+                value: "INVALID"
+              },
+              {
+                path: ["register", "error"],
+                value: "Registration failed - no id has been created"
+              }
+            ];
+          }
+          return;
+        })
+        .catch(reason => console.error(reason));
     }
   }
 ];

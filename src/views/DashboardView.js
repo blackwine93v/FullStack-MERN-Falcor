@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
 });
 // You can add your reducers here
 const mapDispatchToProps = dispatch => ({});
+
 class DashboardView extends React.Component {
   render() {
     return (

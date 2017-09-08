@@ -6,7 +6,9 @@ class CoreLayout extends React.Component {
     return (
       <div>
         <span>
-          Links: <Link to="/login">Login</Link> |
+          Links:
+          <Link to="/register">Register</Link>
+          <Link to="/login">Login</Link> |
           <Link to="/">Home Page</Link>
         </span>
         <br />
